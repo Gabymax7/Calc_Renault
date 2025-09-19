@@ -201,10 +201,9 @@
   </div>
   <div class="wrap">
     <h1>Calculadora de Crédito · Multimarca</h1>
-    <div class="hint">Renault: tope por línea/plazo; CNC en efectivo + IVA
+    <div class="hint">Chevrolet: PROMOC 0KM (C/$1000 y gastos). Renault: tope por línea/plazo; CNC en efectivo + IVA
       incluido en Entrega.</div>
 
-    <!-- Panel de entrada -->
     <div class="card" style="margin-bottom:16px">
       <div class="grid">
         <div class="col-4">
@@ -235,7 +234,6 @@
       </div>
     </div>
 
-    <!-- Resultados -->
     <div class="grid">
       <div class="col-6">
         <div class="kpi" id="kpiEntrega">
@@ -258,6 +256,77 @@
 
   <script>
     // Datos embebidos
+    const CH_DATA = [
+      {
+        "modelo": "ONIX",
+        "valor_auto": 29000000.0,
+        "plazos": [
+          { "plazo": 12, "c_por_1000": 83.3333, "gastos_otorgamiento": 0.15, "maximo": 12000000.0 },
+          { "plazo": 18, "c_por_1000": 58.55, "gastos_otorgamiento": 0.15, "maximo": 16000000.0 },
+          { "plazo": 24, "c_por_1000": 47.74502, "gastos_otorgamiento": 0.15, "maximo": 14000000.0 },
+          { "plazo": 30, "c_por_1000": 45.879, "gastos_otorgamiento": 0.15, "maximo": 18000000.0 }
+        ]
+      },
+      {
+        "modelo": "TRACKER",
+        "valor_auto": 32500000.0,
+        "plazos": [
+          { "plazo": 12, "c_por_1000": 83.333, "gastos_otorgamiento": 0.15, "maximo": 12000000.0 },
+          { "plazo": 18, "c_por_1000": 58.551, "gastos_otorgamiento": 0.15, "maximo": 16000000.0 },
+          { "plazo": 24, "c_por_1000": 47.74502, "gastos_otorgamiento": 0.15, "maximo": 14000000.0 },
+          { "plazo": 30, "c_por_1000": 45.879, "gastos_otorgamiento": 0.15, "maximo": 18000000.0 }
+        ]
+      },
+      {
+        "modelo": "SPIN",
+        "valor_auto": 25000000.0,
+        "plazos": [
+          { "plazo": 12, "c_por_1000": 83.333, "gastos_otorgamiento": 0.15, "maximo": 12000000.0 },
+          { "plazo": 18, "c_por_1000": 58.55, "gastos_otorgamiento": 0.15, "maximo": 16000000.0 },
+          { "plazo": 30, "c_por_1000": 45.8789, "gastos_otorgamiento": 0.15, "maximo": 20000000.0 }
+        ]
+      },
+      {
+        "modelo": "S10",
+        "valor_auto": 25000000.0,
+        "plazos": [
+          { "plazo": 12, "c_por_1000": 83.3333, "gastos_otorgamiento": 0.15, "maximo": 20000000.0 },
+          { "plazo": 18, "c_por_1000": 61.65742, "gastos_otorgamiento": 0.15, "maximo": 20000000.0 },
+          { "plazo": 24, "c_por_1000": 54.14876, "gastos_otorgamiento": 0.15, "maximo": 20000000.0 },
+          { "plazo": 30, "c_por_1000": 52.66835, "gastos_otorgamiento": 0.15, "maximo": 25000000.0 }
+        ]
+      },
+      {
+        "modelo": "MONTANA",
+        "valor_auto": 32200000.0,
+        "plazos": [
+          { "plazo": 12, "c_por_1000": 83.3333, "gastos_otorgamiento": 0.15, "maximo": 12000000.0 },
+          { "plazo": 18, "c_por_1000": 58.551, "gastos_otorgamiento": 0.15, "maximo": 16000000.0 },
+          { "plazo": 30, "c_por_1000": 45.87887, "gastos_otorgamiento": 0.15, "maximo": 20000000.0 }
+        ]
+      },
+      {
+        "modelo": "TRAILBLAZER",
+        "valor_auto": 25000000.0,
+        "plazos": [
+          { "plazo": 12, "c_por_1000": 83.3333, "gastos_otorgamiento": 0.15, "maximo": 25000000.0 },
+          { "plazo": 18, "c_por_1000": 61.65742, "gastos_otorgamiento": 0.15, "maximo": 25000000.0 },
+          { "plazo": 24, "c_por_1000": 54.18476, "gastos_otorgamiento": 0.15, "maximo": 20000000.0 },
+          { "plazo": 30, "c_por_1000": 52.66835, "gastos_otorgamiento": 0.15, "maximo": 30000000.0 }
+        ]
+      },
+      {
+        "modelo": "SPARK EUV",
+        "valor_auto": 25000000.0,
+        "plazos": [
+          { "plazo": 12, "c_por_1000": 83.3333, "gastos_otorgamiento": 0.15, "maximo": 18000000.0 },
+          { "plazo": 18, "c_por_1000": 68.019, "gastos_otorgamiento": 0.15, "maximo": 20000000.0 },
+          { "plazo": 24, "c_por_1000": 54.18476, "gastos_otorgamiento": 0.15, "maximo": 20000000.0 },
+          { "plazo": 30, "c_por_1000": 52.66835, "gastos_otorgamiento": 0.15, "maximo": 20000000.0 }
+        ]
+      }
+    ];
+
     const RE_DATA = {
       "Convencional": {
         "Particulares": [
@@ -334,232 +403,286 @@
             ]
           },
           {
-            "nombre": "Línea OROCH 12 MARS",
-            "modelos": ["Oroch"],
-            "tope": 12000000,
-            "planes": [
-              { "plazo": 12, "tna": 9.9, "cuota1000": 87.89, "cncCamp": 12 },
-              { "plazo": 18, "tna": 14.9, "cuota1000": 65.43, "cncCamp": 12 },
-              { "plazo": 24, "tna": 24.9, "cuota1000": 56.63, "cncCamp": 12 },
-              { "plazo": 36, "tna": 39.9, "cuota1000": 54.34, "cncCamp": 12 },
-              { "plazo": 48, "tna": 44.9, "cuota1000": 52.61, "cncCamp": 12 },
-              { "plazo": 60, "tna": 44.9, "cuota1000": 49.65, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea DUSTER 12 MARS",
+            "nombre": "Línea DUSTER 16 MARS",
             "modelos": ["Duster"],
-            "tope": 12000000,
+            "tope": 16000000,
             "planes": [
-              { "plazo": 12, "tna": 9.9, "cuota1000": 87.89, "cncCamp": 12 },
-              { "plazo": 18, "tna": 14.9, "cuota1000": 65.43, "cncCamp": 12 },
-              { "plazo": 24, "tna": 24.9, "cuota1000": 56.63, "cncCamp": 12 },
-              { "plazo": 36, "tna": 39.9, "cuota1000": 54.34, "cncCamp": 12 },
-              { "plazo": 48, "tna": 44.9, "cuota1000": 52.61, "cncCamp": 12 },
-              { "plazo": 60, "tna": 44.9, "cuota1000": 49.65, "cncCamp": 12 }
+              { "plazo": 12, "tna": 4.9, "cuota1000": 86.42, "cncCamp": 12 },
+              { "plazo": 18, "tna": 9.9, "cuota1000": 61.74, "cncCamp": 12 },
+              { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 },
+              { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
             ]
           },
           {
-            "nombre": "Línea KOLEOS 24 MARS",
-            "modelos": ["Koleos"],
-            "tope": 24000000,
-            "planes": [
-              { "plazo": 24, "tna": 34.9, "cuota1000": 60.18, "cncCamp": 12 },
-              { "plazo": 36, "tna": 49.9, "cuota1000": 60.75, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea ALASKAN 15 MARS",
-            "modelos": ["Alaskan"],
-            "tope": 15000000,
-            "planes": [
-              { "plazo": 12, "tna": 24.9, "cuota1000": 93.41, "cncCamp": 12 },
-              { "plazo": 18, "tna": 34.9, "cuota1000": 74.33, "cncCamp": 12 },
-              { "plazo": 24, "tna": 49.9, "cuota1000": 68.32, "cncCamp": 12 },
-              { "plazo": 36, "tna": 59.9, "cuota1000": 67.55, "cncCamp": 12 },
-              { "plazo": 48, "tna": 69.9, "cuota1000": 68.75, "cncCamp": 12 },
-              { "plazo": 60, "tna": 69.9, "cuota1000": 66.86, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea TWINGO E-TECH 15 MARS",
-            "modelos": ["Twingo E-TECH"],
-            "tope": 15000000,
-            "planes": [
-              { "plazo": 24, "tna": 24.9, "cuota1000": 56.63, "cncCamp": 12 },
-              { "plazo": 36, "tna": 39.9, "cuota1000": 54.34, "cncCamp": 12 },
-              { "plazo": 48, "tna": 44.9, "cuota1000": 52.61, "cncCamp": 12 },
-              { "plazo": 60, "tna": 44.9, "cuota1000": 49.65, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea MEGANE E-TECH 20 MARS",
-            "modelos": ["Megane E-TECH"],
+            "nombre": "Línea DUSTER 20 MARS",
+            "modelos": ["Duster"],
             "tope": 20000000,
             "planes": [
-              { "plazo": 24, "tna": 34.9, "cuota1000": 60.18, "cncCamp": 12 },
-              { "plazo": 36, "tna": 49.9, "cuota1000": 60.75, "cncCamp": 12 }
+              { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
+              { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
+              { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
+            ]
+          },
+          {
+            "nombre": "Línea KARDIAN 13 MARS",
+            "modelos": ["Kardian"],
+            "tope": 14000000,
+            "planes": [
+              { "plazo": 12, "tna": 0.0, "cuota1000": 83.33, "cncCamp": 9 },
+              { "plazo": 18, "tna": 9.9, "cuota1000": 61.74, "cncCamp": 12 },
+              { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 }
+            ]
+          },
+          {
+            "nombre": "Línea KARDIAN 16 MARS",
+            "modelos": ["Kardian"],
+            "tope": 16000000,
+            "planes": [
+              { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
+              { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
+              { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
+            ]
+          },
+          {
+            "nombre": "Línea ARKANA 15 MARS",
+            "modelos": ["Arkana"],
+            "tope": 15000000,
+            "planes": [
+              { "plazo": 12, "tna": 9.9, "cuota1000": 89.60, "cncCamp": 12 }
+            ]
+          },
+          {
+            "nombre": "Línea ARKANA 17 MARS",
+            "modelos": ["Arkana"],
+            "tope": 17000000,
+            "planes": [
+              { "plazo": 18, "tna": 24.9, "cuota1000": 71.50, "cncCamp": 12 },
+              { "plazo": 24, "tna": 29.9, "cuota1000": 61.09, "cncCamp": 12 }
             ]
           }
         ],
-        "Comerciales": [
+        "Utilitarios": [
           {
-            "nombre": "Línea KANGOO Express 15 MARS",
-            "modelos": ["Kangoo Express"],
-            "tope": 15000000,
+            "nombre": "Línea ALASKAN 22 MARS",
+            "modelos": ["Alaskan"],
+            "tope": 22000000,
             "planes": [
-              { "plazo": 12, "tna": 24.9, "cuota1000": 93.41, "cncCamp": 12 },
-              { "plazo": 18, "tna": 34.9, "cuota1000": 74.33, "cncCamp": 12 },
-              { "plazo": 24, "tna": 49.9, "cuota1000": 68.32, "cncCamp": 12 },
-              { "plazo": 36, "tna": 59.9, "cuota1000": 67.55, "cncCamp": 12 },
-              { "plazo": 48, "tna": 69.9, "cuota1000": 68.75, "cncCamp": 12 },
-              { "plazo": 60, "tna": 69.9, "cuota1000": 66.86, "cncCamp": 12 }
+              { "plazo": 12, "tna": 4.9, "cuota1000": 86.42, "cncCamp": 12 },
+              { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
+              { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
+              { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
+            ]
+          },
+          {
+            "nombre": "Línea ALASKAN 18 MARS",
+            "modelos": ["Alaskan"],
+            "tope": 18000000,
+            "planes": [
+              { "plazo": 12, "tna": 4.9, "cuota1000": 86.42, "cncCamp": 12 },
+              { "plazo": 18, "tna": 9.9, "cuota1000": 61.74, "cncCamp": 12 },
+              { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 },
+              { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
+              { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
+              { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
+            ]
+          },
+          {
+            "nombre": "Línea 13 MARS OROCH",
+            "modelos": ["Oroch"],
+            "tope": 13000000,
+            "planes": [
+              { "plazo": 12, "tna": 4.9, "cuota1000": 86.42, "cncCamp": 12 },
+              { "plazo": 18, "tna": 9.9, "cuota1000": 61.74, "cncCamp": 12 },
+              { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 },
+              { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
+              { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
+              { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
+            ]
+          },
+          {
+            "nombre": "Línea 16 MARS OROCH",
+            "modelos": ["Oroch"],
+            "tope": 16000000,
+            "planes": [
+              { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 },
+              { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
+              { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
+              { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
+            ]
+          },
+          {
+            "nombre": "Línea 12 MARS KVU",
+            "modelos": ["Kangoo Express"],
+            "tope": 13000000,
+            "planes": [
+              { "plazo": 12, "tna": 0.0, "cuota1000": 83.33, "cncCamp": 9 },
+              { "plazo": 18, "tna": 0.0, "cuota1000": 55.56, "cncCamp": 9 }
+            ]
+          },
+          {
+            "nombre": "Línea 14 MARS KVU",
+            "modelos": ["Kangoo Express"],
+            "tope": 14000000,
+            "planes": [
+              { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 }
+            ]
+          },
+          {
+            "nombre": "Línea 16 MARS KVU",
+            "modelos": ["Kangoo Express"],
+            "tope": 16000000,
+            "planes": [
+              { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 }
+            ]
+          },
+          {
+            "nombre": "Línea 19 MARS KVU",
+            "modelos": ["Kangoo Express"],
+            "tope": 19000000,
+            "planes": [
+              { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
+              { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
+            ]
+          },
+          {
+            "nombre": "Línea 13 MARS MASTER",
+            "modelos": ["Master"],
+            "tope": 13000000,
+            "planes": [
+              { "plazo": 12, "tna": 19.9, "cuota1000": 96.07, "cncCamp": 12 },
+              { "plazo": 18, "tna": 29.9, "cuota1000": 74.85, "cncCamp": 12 },
+              { "plazo": 24, "tna": 39.9, "cuota1000": 68.12, "cncCamp": 12 }
+            ]
+          },
+          {
+            "nombre": "Línea 23 MARS MASTER",
+            "modelos": ["Master"],
+            "tope": 23000000,
+            "planes": [
+              { "plazo": 48, "tna": 49.9, "cuota1000": 57.17, "cncCamp": 12 },
+              { "plazo": 60, "tna": 49.9, "cuota1000": 54.27, "cncCamp": 12 }
             ]
           }
         ]
       }
     };
 
-    function fmt(n) {
-      if (typeof n !== 'number') return '—';
-      return new Intl.NumberFormat('es-AR').format(n);
-    }
 
-    function fmtInt(n) {
-      return new Intl.NumberFormat('es-AR', { maximumFractionDigits: 0 }).format(n);
-    }
+    // Helpers de formato
+    const nf = new Intl.NumberFormat('es-AR', { maximumFractionDigits: 0 });
+    const fmt = n => (n === null || n === undefined || isNaN(n)) ? '—' : n.toLocaleString('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 });
+    const fmtInt = n => nf.format(n || 0);
+    const unfmt = s => !s ? 0 : Number(String(s).replace(/[^0-9]/g, '')) || 0;
+    const mask = el => { el.value = el.value ? fmtInt(unfmt(el.value)) : ''; };
 
-    // Lógica para Renault
-    function re_lineaPara(modelo, plazo) {
-      const lineas = Object.values(RE_DATA.Convencional).flatMap(arr => arr);
-      return lineas.find(linea => linea.modelos.includes(modelo) && linea.planes.some(p => p.plazo === parseInt(plazo)));
-    }
+    // Tema (🌙/🌞)
+    const themeBtn = document.getElementById('themeToggle');
+    function updateThemeIcon() { themeBtn.textContent = document.body.classList.contains('dark') ? '🌞' : '🌙'; }
+    themeBtn.addEventListener('click', () => { document.body.classList.toggle('dark'); updateThemeIcon(); localStorage.setItem('calc_theme', document.body.classList.contains('dark') ? 'dark' : 'light'); });
+    const savedTheme = localStorage.getItem('calc_theme'); if (savedTheme === 'dark') document.body.classList.add('dark'); updateThemeIcon();
 
-    function re_planPara(modelo, plazo) {
-      const linea = re_lineaPara(modelo, plazo);
-      return linea ? linea.planes.find(p => p.plazo === parseInt(plazo)) : null;
-    }
-
-    function re_modelos() {
-      const modelos = Object.values(RE_DATA.Convencional)
-        .flatMap(arr => arr.flatMap(linea => linea.modelos));
-      return Array.from(new Set(modelos));
-    }
-    
-    function re_plazosPara(modelo) {
-        const lineas = Object.values(RE_DATA.Convencional).flatMap(arr => arr);
-        const plazos = lineas
-            .filter(linea => linea.modelos.includes(modelo))
-            .flatMap(linea => linea.planes.map(p => p.plazo));
-        return Array.from(new Set(plazos)).sort((a, b) => a - b);
-    }
-
-    function formatInput(inputElement) {
-        let value = inputElement.value.replace(/\D/g, ''); // Elimina todo lo que no sea un número
-        if (value) {
-            inputElement.value = new Intl.NumberFormat('es-AR').format(value);
-        }
-    }
-    
-    // Elementos de la UI
+    // DOM
     const selMarca = document.getElementById('marca');
     const selModelo = document.getElementById('modelo');
     const selPlazo = document.getElementById('plazo');
     const inValor = document.getElementById('valorUnidad');
-    const inMonto = document.getElementById('montoSolicitado');
-    const outMontoMax = document.getElementById('montoMax');
+    const inMax = document.getElementById('montoMax');
+    const inCred = document.getElementById('montoSolicitado');
     const outEnt = document.getElementById('entrega');
     const outCuo = document.getElementById('cuota');
+    const kpiCuo = document.getElementById('kpiCuota');
 
-    // Inicialización
+    // Renault helpers
+    function re_allLineas() { const out = []; Object.values(RE_DATA).forEach(prod => Object.values(prod).forEach(arr => arr.forEach(l => out.push(l)))); return out; }
+    function re_modelosUnicos() { const s = new Set(); re_allLineas().forEach(l => l.modelos.forEach(m => s.add(m))); return Array.from(s).sort(); }
+    function re_planesPorModelo(modelo) { return re_allLineas().filter(l => l.modelos.includes(modelo)); }
+    function re_plazosDisponibles(modelo) { const s = new Set(); re_planesPorModelo(modelo).forEach(l => l.planes.forEach(p => s.add(p.plazo))); return Array.from(s).sort((a, b) => a - b); }
+    function re_lineaPara(modelo, plazo) { const c = re_planesPorModelo(modelo).filter(l => l.planes.some(p => p.plazo === plazo)); if (!c.length) return null; return c.reduce((a, b) => (a.tope || 0) >= (b.tope || 0) ? a : b); }
+    function re_planPara(modelo, plazo) { const l = re_lineaPara(modelo, plazo); return l ? l.planes.find(p => p.plazo === plazo) : null; }
+
+    // Chevrolet helpers
+    function ch_modelosUnicos() { return CH_DATA.map(m => m.modelo); }
+    function ch_plazosDisponibles(modelo) { const row = CH_DATA.find(m => m.modelo === modelo); return row ? row.plazos.map(p => p.plazo).filter(p => [12, 18, 30].includes(p)).sort((a, b) => a - b) : []; }
+    function ch_row(modelo, plazo) { const row = CH_DATA.find(m => m.modelo === modelo); return row ? row.plazos.find(p => p.plazo === plazo) : null; }
+    function ch_valorAuto(modelo) { const row = CH_DATA.find(m => m.modelo === modelo); return row ? (row.valor_auto || 0) : 0; }
+
+    // Cargar marcas
     function loadMarcas() {
-      selMarca.innerHTML = '<option value="Renault">Renault</option>';
+      selMarca.innerHTML = ['Renault'].map(m => `<option value="${m}">${m}</option>`).join('');
+      const savedMarca = localStorage.getItem('calc_marca');
+      if (savedMarca === 'Chevrolet' || savedMarca === 'Renault') selMarca.value = savedMarca;
     }
 
     function loadModelos() {
-      selModelo.innerHTML = '<option selected disabled>Seleccione un modelo</option>';
-      re_modelos().forEach(modelo => {
-        const opt = document.createElement('option');
-        opt.value = modelo;
-        opt.textContent = modelo;
-        selModelo.appendChild(opt);
-      });
-      inValor.value = '';
+      const marca = selMarca.value;
+      let mods = [];
+      if (marca === 'Chevrolet') mods = ch_modelosUnicos();
+      else mods = re_modelosUnicos();
+      selModelo.innerHTML = mods.map(m => `<option value="${m}">${m}</option>`).join('');
+      // Prefill valor auto en Chevy si hay dato
+      if (marca === 'Chevrolet') { const v = ch_valorAuto(selModelo.value); inValor.value = v ? fmtInt(Math.round(v)) : ''; }
+      else inValor.value = '';
     }
 
     function loadPlazos() {
-      selPlazo.innerHTML = '<option selected disabled>Seleccione un plazo</option>';
+      const marca = selMarca.value;
       const modelo = selModelo.value;
-      if (!modelo) return;
-      
-      re_plazosPara(modelo).forEach(plazo => {
-          const opt = document.createElement('option');
-          opt.value = plazo;
-          opt.textContent = `${plazo} meses`;
-          selPlazo.appendChild(opt);
-      });
+      let plazos = [];
+      if (marca === 'Chevrolet') plazos = ch_plazosDisponibles(modelo);
+      else plazos = re_plazosDisponibles(modelo);
+      selPlazo.innerHTML = plazos.map(p => `<option value="${p}">${p} meses</option>`).join('');
     }
 
     function updateLimite() {
-      const modelo = selModelo.value;
-      const plazo = selPlazo.value;
-      if (!modelo || !plazo) { outMontoMax.value = ''; return; }
-      
-      const linea = re_lineaPara(modelo, plazo);
-      if (linea) {
-        outMontoMax.value = fmtInt(linea.tope);
-      } else {
-        outMontoMax.value = '';
-      }
+      const marca = selMarca.value, modelo = selModelo.value, plazo = +selPlazo.value;
+      let limite = null;
+      if (marca === 'Chevrolet') { const row = ch_row(modelo, plazo); limite = row?.maximo ?? null; }
+      else { const linea = re_lineaPara(modelo, plazo); limite = linea?.tope ?? null; }
+      inMax.value = fmt(limite);
+      return limite || 0;
     }
 
     function recalc() {
-      const precio = parseFloat(inValor.value.replace(/\./g, '')) || 0;
-      const creditoReq = parseFloat(inMonto.value.replace(/\./g, '')) || 0;
-      const modelo = selModelo.value;
-      const plazo = selPlazo.value;
+      const marca = selMarca.value, modelo = selModelo.value, plazo = +selPlazo.value;
+      const precio = unfmt(inValor.value);
+      const creditoReq = unfmt(inCred.value);
+      const limite = updateLimite();
+      // Validación límite
+      const over = limite > 0 && creditoReq > limite;
+      if (over) { outEnt.textContent = '—'; outCuo.textContent = '—'; kpiCuo.classList.add('alert'); return; } else kpiCuo.classList.remove('alert');
 
-      if (!precio || !creditoReq || !modelo || !plazo) {
-        outEnt.textContent = '—';
-        outCuo.textContent = '—';
-        return;
+      if (marca === 'Chevrolet') {
+        const row = ch_row(modelo, plazo) || {};
+        const go = row.gastos_otorgamiento ?? 0;
+        const coef = row.c_por_1000 || 0;
+        const acreditado = creditoReq * (1 - go);
+        const entrega = (precio && acreditado) ? (precio - acreditado) : null;
+        const cuota = coef * (creditoReq / 1000);
+        outEnt.textContent = fmt(entrega);
+        outCuo.textContent = fmt(cuota);
+      } else {
+        const plan = re_planPara(modelo, plazo);
+        const linea = re_lineaPara(modelo, plazo);
+        if (!plan || !linea) { outEnt.textContent = '—'; outCuo.textContent = '—'; return; }
+        const creditoBruto = Math.min(creditoReq, linea.tope || 0);
+        const cnc = creditoBruto * ((plan.cncCamp || 0) / 100) * 1.21; // CNC efectivo + IVA
+        const neto = creditoBruto; // no se descuenta CNC del acreditado
+        const entrega = (precio - neto) + cnc;
+        const cuota = plan.cuota1000 * (creditoBruto / 1000);
+        outEnt.textContent = fmt(entrega);
+        outCuo.textContent = fmt(cuota);
       }
-      
-      const plan = re_planPara(modelo, plazo);
-      const linea = re_lineaPara(modelo, plazo);
-      if (!plan || !linea) { outEnt.textContent = '—'; outCuo.textContent = '—'; return; }
-      const creditoBruto = Math.min(creditoReq, linea.tope || 0);
-      const cnc = creditoBruto * ((plan.cncCamp || 0) / 100) * 1.21; // CNC efectivo + IVA
-      const neto = creditoBruto; // no se descuenta CNC del acreditado
-      const entrega = (precio - neto) + cnc;
-      const cuota = plan.cuota1000 * (creditoBruto / 1000);
-      outEnt.textContent = fmt(entrega);
-      outCuo.textContent = fmt(cuota);
-    }
-    
-    // Evento para el modo noche
-    const themeToggle = document.getElementById('themeToggle');
-    themeToggle.addEventListener('click', () => {
-      document.body.classList.toggle('dark');
-      localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
-    });
-
-    // Cargar el tema guardado
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-      document.body.classList.add('dark');
     }
 
     // Eventos
     selMarca.addEventListener('change', () => { localStorage.setItem('calc_marca', selMarca.value); loadModelos(); loadPlazos(); updateLimite(); recalc(); });
-    selModelo.addEventListener('change', () => { loadPlazos(); updateLimite(); recalc(); });
+    selModelo.addEventListener('change', () => { if (selMarca.value === 'Chevrolet') { const v = ch_valorAuto(selModelo.value); inValor.value = v ? fmtInt(Math.round(v)) : ''; } loadPlazos(); updateLimite(); recalc(); });
     selPlazo.addEventListener('change', () => { updateLimite(); recalc(); });
-    inValor.addEventListener('input', () => { formatInput(inValor); recalc(); });
-    inMonto.addEventListener('input', () => { formatInput(inMonto); recalc(); });
+    inValor.addEventListener('input', () => { mask(inValor); recalc(); });
+    inCred.addEventListener('input', () => { mask(inCred); recalc(); });
 
-    loadMarcas();
-    loadModelos();
-    recalc();
+    // Init
+    loadMarcas(); loadModelos(); loadPlazos(); updateLimite(); recalc();
   </script>
 </body>
 
