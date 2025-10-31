@@ -2,602 +2,884 @@
 <html lang="es">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Calculadora de Crédito · Renault</title>
-  <style>
-    :root {
-      --bg: #f6f8fb;
-      --text: #0b1220;
-      --panel: #ffffff;
-      --muted: #6b7280;
-      --accent: #66fcf1;
-      --danger: #ff4d57;
-      --border: #d7dde5;
-      --field: #ffffff;
-      --chip: #f1f5f9;
-      --radius: 14px;
-      --gap: 16px;
-    }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calculadora de Crédito · Multimarca</title>
+    <style>
+        :root {
+            --bg: #f6f8fb;
+            --text: #0b1220;
+            --panel: #ffffff;
+            --muted: #6b7280;
+            --accent: #66fcf1;
+            --danger: #ff4d57;
+            --border: #d7dde5;
+            --field: #ffffff;
+            --chip: #f1f5f9;
+            --radius: 14px;
+            --gap: 16px;
+        }
 
-    body.dark {
-      --bg: #0b0c10;
-      --text: #e6eef6;
-      --panel: #1f2833;
-      --muted: #c5c6c7;
-      --accent: #66fcf1;
-      --danger: #ff4d57;
-      --border: #2b3642;
-      --field: #12161c;
-      --chip: #0f1318;
-    }
+        body.dark {
+            --bg: #0b0c10;
+            --text: #e6eef6;
+            --panel: #1f2833;
+            --muted: #c5c6c7;
+            --accent: #66fcf1;
+            --danger: #ff4d57;
+            --border: #2b3642;
+            --field: #12161c;
+            --chip: #0f1318;
+        }
 
-    * {
-      box-sizing: border-box;
-      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
-    }
+        * {
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+        }
 
-    body {
-      margin: 0;
-      background: var(--bg);
-      color: var(--text);
-    }
+        body {
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+        }
 
-    .wrap {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 22px;
-    }
+        .wrap {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 22px;
+        }
 
-    h1 {
-      text-align: center;
-      margin: 0 0 12px;
-      font-size: 22px;
-    }
+        h1 {
+            text-align: center;
+            margin: 0 0 12px;
+            font-size: 22px;
+        }
 
-    .topbar {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      padding: 10px 8px 0;
-    }
+        .topbar {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 10px 8px 0;
+        }
 
-    .theme-toggle {
-      cursor: pointer;
-      font-size: 22px;
-      line-height: 1;
-      user-select: none;
-      padding: 6px 8px;
-      border-radius: 10px;
-    }
+        .theme-toggle {
+            cursor: pointer;
+            font-size: 22px;
+            line-height: 1;
+            user-select: none;
+            padding: 6px 8px;
+            border-radius: 10px;
+        }
 
-    .hint {
-      text-align: center;
-      color: var(--muted);
-      font-size: 12px;
-      margin-bottom: 12px;
-    }
+        .hint {
+            text-align: center;
+            color: var(--muted);
+            font-size: 12px;
+            margin-bottom: 12px;
+        }
 
-    .card {
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 18px;
-    }
+        .card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 18px;
+        }
 
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: var(--gap);
-    }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: var(--gap);
+        }
 
-    .col-3 {
-      grid-column: span 3;
-    }
+        .col-3 {
+            grid-column: span 3;
+        }
 
-    .col-4 {
-      grid-column: span 4;
-    }
+        .col-4 {
+            grid-column: span 4;
+        }
 
-    .col-6 {
-      grid-column: span 6;
-    }
+        .col-6 {
+            grid-column: span 6;
+        }
 
-    .col-12 {
-      grid-column: span 12;
-    }
+        .col-12 {
+            grid-column: span 12;
+        }
 
-    @media (max-width: 900px) {
+        @media (max-width: 900px) {
 
-      .col-3,
-      .col-4,
-      .col-6,
-      .col-12 {
-        grid-column: span 12;
-      }
-    }
+            .col-3,
+            .col-4,
+            .col-6,
+            .col-12 {
+                grid-column: span 12;
+            }
+        }
 
-    label {
-      display: block;
-      font-size: 12px;
-      color: var(--muted);
-      margin-bottom: 6px;
-      text-align: center;
-    }
+        label {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 6px;
+            text-align: center;
+        }
 
-    input,
-    select {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: var(--radius);
-      border: 1px solid var(--border);
-      background: var(--field);
-      color: var(--text);
-      text-align: center;
-    }
+        input,
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+            background: var(--field);
+            color: var(--text);
+            text-align: center;
+        }
 
-    input:focus,
-    select:focus {
-      outline: none;
-      border-color: var(--accent);
-    }
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
 
-    .chip {
-      width: fit-content;
-      min-width: 160px;
-      padding: 10px 14px;
-      border-radius: 10px;
-      border: 1px dashed var(--border);
-      background: var(--chip);
-      margin: 0 auto;
-    }
+        .chip {
+            width: fit-content;
+            min-width: 160px;
+            padding: 10px 14px;
+            border-radius: 10px;
+            border: 1px dashed var(--border);
+            background: var(--chip);
+            margin: 0 auto;
+        }
 
-    .kpi {
-      background: var(--field);
-      border: 1px dashed var(--border);
-      border-radius: 18px;
-      padding: 26px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-    }
+        .kpi {
+            background: var(--field);
+            border: 1px dashed var(--border);
+            border-radius: 18px;
+            padding: 26px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
 
-    .kpi .label {
-      font-size: 12px;
-      color: var(--muted);
-    }
+        .kpi .label {
+            font-size: 12px;
+            color: var(--muted);
+        }
 
-    .kpi .value {
-      font-size: 32px;
-      font-weight: 900;
-      color: var(--accent);
-    }
+        .kpi .value {
+            font-size: 32px;
+            font-weight: 900;
+            color: var(--accent);
+        }
 
-    .kpi.alert .value {
-      color: var(--danger);
-    }
+        .kpi.alert .value {
+            color: var(--danger);
+        }
 
-    .toolbar {
-      display: flex;
-      justify-content: center;
-      margin-top: 16px;
-    }
+        .toolbar {
+            display: flex;
+            justify-content: center;
+            margin-top: 16px;
+        }
 
-    .btn {
-      cursor: pointer;
-      padding: 12px 16px;
-      border-radius: 12px;
-      border: 1px solid var(--border);
-      background: linear-gradient(90deg, #2cc7bf, var(--accent));
-      color: #001417;
-    }
-  </style>
+        .btn {
+            cursor: pointer;
+            padding: 12px 16px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            background: linear-gradient(90deg, #2cc7bf, var(--accent));
+            color: #001417;
+        }
+    </style>
 </head>
 
 <body>
-  <div class="topbar">
-    <span id="themeToggle" class="theme-toggle" title="Cambiar tema">🌙</span>
-  </div>
-  <div class="wrap">
-    <h1>Calculadora de Crédito · Renault</h1>
-    <div class="hint"></div>
+    <div class="topbar">
+        <span id="themeToggle" class="theme-toggle" title="Cambiar tema">🌙</span>
+    </div>
+    <div class="wrap">
+        <h1>Calculadora de Crédito · Multimarca</h1>
+        <div class="hint">Chevrolet: PROMOC 0KM (C/$1000 y gastos). Renault: tope por línea/plazo; CNC en efectivo + IVA
+            incluido en Entrega.</div>
 
-    <div class="card" style="margin-bottom:16px">
-      <div class="grid">
-        <div class="col-4">
-          <label>Marca</label>
-          <select id="marca"></select>
-        </div>
-        <div class="col-4">
-          <label>Modelo</label>
-          <select id="modelo"></select>
-        </div>
-        <div class="col-4">
-          <label>Plazo</label>
-          <select id="plazo"></select>
+        <div class="card" style="margin-bottom:16px">
+            <div class="grid">
+                <div class="col-4">
+                    <label>Marca</label>
+                    <select id="marca"></select>
+                </div>
+                <div class="col-4">
+                    <label>Modelo</label>
+                    <select id="modelo"></select>
+                </div>
+                <div class="col-4">
+                    <label>Plazo</label>
+                    <select id="plazo"></select>
+                    <div id="rateOptionsContainer" style="margin-top: 10px; display: none;">
+                        <label style="margin-bottom: 2px; font-size: 11px; text-align: left; color: var(--text);">Opción
+                            de
+                            Tasa</label>
+                        <select id="rateOption" style="font-size: 14px; padding: 8px 10px; text-align: left;">
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-6">
+                    <label>Valor de la unidad ($)</label>
+                    <input id="valorUnidad" type="text" inputmode="numeric" placeholder="Ej: 32.200.000">
+                </div>
+                <div class="col-3">
+                    <label>Monto máximo</label>
+                    <input id="montoMax" class="chip" type="text" readonly>
+                </div>
+                <div class="col-3">
+                    <label>Monto solicitado ($)</label>
+                    <input id="montoSolicitado" type="text" inputmode="numeric" placeholder="Ej: 12.000.000">
+                </div>
+            </div>
         </div>
 
-        <div class="col-6">
-          <label>Valor de la unidad ($)</label>
-          <input id="valorUnidad" type="text" inputmode="numeric" placeholder="Ej: 32.200.000">
+        <div class="grid">
+            <div class="col-6">
+                <div class="kpi" id="kpiEntrega">
+                    <div class="label">Entrega</div>
+                    <div id="entrega" class="value">—</div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="kpi" id="kpiCuota">
+                    <div class="label">Cuota estimada (sin seguro)</div>
+                    <div id="cuota" class="value">—</div>
+                </div>
+            </div>
         </div>
-        <div class="col-3">
-          <label>Monto máximo</label>
-          <input id="montoMax" class="chip" type="text" readonly>
+
+        <div class="toolbar" style="margin-bottom:14px">
+            <button class="btn" onclick="window.print()">Imprimir</button>
         </div>
-        <div class="col-3">
-          <label>Monto solicitado ($)</label>
-          <input id="montoSolicitado" type="text" inputmode="numeric" placeholder="Ej: 12.000.000">
-        </div>
-      </div>
     </div>
 
-    <div class="grid">
-      <div class="col-6">
-        <div class="kpi" id="kpiEntrega">
-          <div class="label">Entrega</div>
-          <div id="entrega" class="value">—</div>
-        </div>
-      </div>
-      <div class="col-6">
-        <div class="kpi" id="kpiCuota">
-          <div class="label">Cuota estimada (sin seguro)</div>
-          <div id="cuota" class="value">—</div>
-        </div>
-      </div>
-    </div>
+    <script>
+        // Datos embebidos
+        // El array CH_DATA de Chevrolet ha sido eliminado.
 
-    <div class="toolbar" style="margin-bottom:14px">
-      <button class="btn" onclick="window.print()">Imprimir</button>
-    </div>
-  </div>
+        const RE_DATA = {
+            "Convencional": {
+                "Particulares": [
+                    {
+                        "nombre": "Línea KWID 12 MARS",
+                        "modelos": ["Kwid"],
+                        "tope": 12000000,
+                        "planes": [
+                            { "plazo": 12, "tna": 0.0, "cuota1000": 83.33, "cncCamp": 9 },
+                            { "plazo": 18, "tna": 0.0, "cuota1000": 55.56, "cncCamp": 9 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea KWID 11 MARS",
+                        "modelos": ["Kwid"],
+                        "tope": 11000000,
+                        "planes": [
+                            { "plazo": 24, "tna": 9.9, "cuota1000": 47.83, "cncCamp": 12 },
+                        ]
+                    },
+                    {
+                        "nombre": "Línea KWID 10 MARS",
+                        "modelos": ["Kwid"],
+                        "tope": 10000000,
+                        "planes": [
+                            { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
+                            { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
+                            { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea LOGAN 13 MARS",
+                        "modelos": ["Logan"],
+                        "tope": 13000000,
+                        "planes": [
+                            { "plazo": 12, "tna": 0.0, "cuota1000": 83.33, "cncCamp": 9 },
+                            { "plazo": 18, "tna": 0.0, "cuota1000": 55.56, "cncCamp": 9 },
+                            { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 },
+                            { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
+                            { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
+                            { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea SANDERO 13 MARS",
+                        "modelos": ["Sandero"],
+                        "tope": 13000000,
+                        "planes": [
+                            { "plazo": 12, "tna": 4.9, "cuota1000": 86.42, "cncCamp": 12 },
+                            { "plazo": 18, "tna": 9.9, "cuota1000": 61.74, "cncCamp": 12 },
+                            { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 },
+                            { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
+                            { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
+                            { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea STEPWAY 13 MARS",
+                        "modelos": ["Stepway"],
+                        "tope": 13000000,
+                        "planes": [
+                            { "plazo": 12, "tna": 4.9, "cuota1000": 86.42, "cncCamp": 12 },
+                            { "plazo": 18, "tna": 9.9, "cuota1000": 61.74, "cncCamp": 12 },
+                            { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 },
+                            { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
+                            { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
+                            { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea KANGOO VP 13 MARS",
+                        "modelos": ["Kangoo VP"],
+                        "tope": 13000000,
+                        "planes": [
+                            { "plazo": 12, "tna": 4.9, "cuota1000": 86.42, "cncCamp": 12 },
+                            { "plazo": 18, "tna": 9.9, "cuota1000": 61.74, "cncCamp": 12 },
+                            { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 },
+                            { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
+                            { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
+                            { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea DUSTER 15 MARS",
+                        "modelos": ["Duster"],
+                        "tope": 15000000,
+                        "planes": [
+                            { "plazo": 12, "tna": 14.9, "cuota1000": 92.82, "cncCamp": 12 },
+                            { "plazo": 18, "tna": 19.9, "cuota1000": 68.20, "cncCamp": 12 },
+                            { "plazo": 24, "tna": 24.9, "cuota1000": 57.68, "cncCamp": 12 },
+                            { "plazo": 36, "tna": 34.9, "cuota1000": 51.29, "cncCamp": 12 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea DUSTER 20 MARS",
+                        "modelos": ["Duster"],
+                        "tope": 20000000,
+                        "planes": [
+                            { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
+                            { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea KARDIAN TASA 0",
+                        "modelos": ["Kardian"],
+                        "tope": 18000000,
+                        "planes": [
+                            { "plazo": 12, "tna": 0.0, "cuota1000": 83.33, "cncCamp": 9 },
+                            { "plazo": 18, "tna": 0.0, "cuota1000": 55.56, "cncCamp": 9 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea KARDIAN 14 MARS",
+                        "modelos": ["Kardian"],
+                        "tope": 14000000,
+                        "planes": [
+                            { "plazo": 24, "tna": 9.9, "cuota1000": 47.83, "cncCamp": 12 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea KARDIAN 10/16 MARS",
+                        "modelos": ["Kardian"],
+                        "tope": 16000000,
+                        "planes": [
+                            { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
+                            { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
+                            { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea ARKANA TASA 0 (9/12M)",
+                        "modelos": ["Arkana"],
+                        "tope": 18000000,
+                        "planes": [
+                            // Plazo 9 meses, TNA 0.00%, Cuota $111.11, CNC 9%
+                            { "plazo": 9, "tna": 0.0, "cuota1000": 111.11, "cncCamp": 9 },
+                            // Plazo 12 meses, TNA 0.00%, Cuota $83.33, CNC 9%
+                            { "plazo": 12, "tna": 0.0, "cuota1000": 83.33, "cncCamp": 9 }
+                        ]
+                    },
+                    // Línea 2: Tasa 0% con tope de $20M (18 meses)
+                    {
+                        "nombre": "Línea ARKANA TASA 0 (18M)",
+                        "modelos": ["Arkana"],
+                        "tope": 20000000,
+                        "planes": [
+                            // Plazo 18 meses, TNA 0.00%, Cuota $55.56, CNC 9%
+                            { "plazo": 18, "tna": 0.0, "cuota1000": 55.56, "cncCamp": 9 }
+                        ]
+                    },
+                    // Línea 3: Tasa 0% con tope de $17M (24 meses)
+                    {
+                        "nombre": "Línea ARKANA TASA 0 (24M)",
+                        "modelos": ["Arkana"],
+                        "tope": 17000000,
+                        "planes": [
+                            // Plazo 24 meses, TNA 0.00%, Cuota $41.67, CNC 9%
+                            { "plazo": 24, "tna": 0.0, "cuota1000": 41.67, "cncCamp": 9 }
+                        ]
+                    },
+                    // Línea 4: Tasa Subsidiada con tope de $25M (18 y 24 meses)
+                    {
+                        "nombre": "Línea ARKANA SUBSIDIADA (18/24M)",
+                        "modelos": ["Arkana"],
+                        "tope": 25000000,
+                        "planes": [
+                            // Plazo 18 meses, TNA 17.90%, Cuota $66.89, CNC 12%
+                            { "plazo": 18, "tna": 17.9, "cuota1000": 66.89, "cncCamp": 12 },
+                            // Plazo 24 meses, TNA 27.90%, Cuota $59.72, CNC 12%
+                            { "plazo": 24, "tna": 27.9, "cuota1000": 59.72, "cncCamp": 12 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea KOLEOS",
+                        "modelos": ["Koleos"],
+                        "tope": 20000000,
+                        "planes": [
+                            { "plazo": 12, "tna": 9.9, "cuota1000": 89.6, "cncCamp": 12 },
+                            { "plazo": 18, "tna": 14.9, "cuota1000": 64.95, "cncCamp": 12 }
+                        ]
+                    }
+                ],
+                "Utilitarios": [
+                    {
+                        "nombre": "Línea OROCH TASA 0",
+                        "modelos": ["Oroch"],
+                        "tope": 16000000,
+                        "planes": [
+                            { "plazo": 12, "tna": 0.0, "cuota1000": 83.33, "cncCamp": 9 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea OROCH",
+                        "modelos": ["Oroch"],
+                        "tope": 16000000,
+                        "planes": [
+                            { "plazo": 18, "tna": 9.9, "cuota1000": 61.74, "cncCamp": 12 },
+                            { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 },
+                            { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
+                            { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
+                            { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea ALASKAN 22 MARS",
+                        "modelos": ["Alaskan"],
+                        "tope": 22000000,
+                        "planes": [
+                            { "plazo": 12, "tna": 4.9, "cuota1000": 86.42, "cncCamp": 12 },
+                            { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
+                            { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea ALASKAN 18 MARS",
+                        "modelos": ["Alaskan"],
+                        "tope": 18000000,
+                        "planes": [
+                            { "plazo": 18, "tna": 9.9, "cuota1000": 61.74, "cncCamp": 12 },
+                            { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 },
+                            { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea KVU TASA 0",
+                        "modelos": ["Kangoo Express"],
+                        "tope": 13000000,
+                        "planes": [
+                            { "plazo": 12, "tna": 0.0, "cuota1000": 83.33, "cncCamp": 9 },
+                            { "plazo": 18, "tna": 0.0, "cuota1000": 55.56, "cncCamp": 9 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea KVU 14 MARS",
+                        "modelos": ["Kangoo Express"],
+                        "tope": 14000000,
+                        "planes": [
+                            { "plazo": 24, "tna": 9.9, "cuota1000": 47.83, "cncCamp": 12 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea KVU 16 MARS",
+                        "modelos": ["Kangoo Express"],
+                        "tope": 16000000,
+                        "planes": [
+                            { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea KVU 19 MARS",
+                        "modelos": ["Kangoo Express"],
+                        "tope": 19000000,
+                        "planes": [
+                            { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
+                            { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
+                        ]
+                    },
+                    {
+                        "nombre": "Línea MASTER 13 MARS",
+                        "modelos": ["Master"],
+                        "tope": 13000000,
+                        "planes": [
+                            { "plazo": 12, "tna": 19.9, "cuota1000": 96.07, "cncCamp": 12 },
+                            { "plazo": 18, "tna": 29.9, "cuota1000": 74.85, "cncCamp": 12 },
+                        ]
+                    },
+                    {
+                        "nombre": "Línea MASTER 23 MARS",
+                        "modelos": ["Master"],
+                        "tope": 23000000,
+                        "planes": [
+                            { "plazo": 24, "tna": 39.9, "cuota1000": 68.12, "cncCamp": 12 },
+                            { "plazo": 36, "tna": 49.9, "cuota1000": 62.78, "cncCamp": 12 },
+                            { "plazo": 48, "tna": 49.9, "cuota1000": 57.17, "cncCamp": 12 },
+                            { "plazo": 60, "tna": 49.9, "cuota1000": 54.27, "cncCamp": 12 }
+                        ]
+                    }
+                ]
+            }
+        };
 
-  <script>
-    // Datos embebidos
-    // El array CH_DATA de Chevrolet ha sido eliminado.
+        // Referencias a elementos del DOM
+        const selMarca = document.getElementById('marca');
+        const selModelo = document.getElementById('modelo');
+        const selPlazo = document.getElementById('plazo');
+        const selRate = document.getElementById('rateOption');
+        const rateContainer = document.getElementById('rateOptionsContainer');
+        const valUni = document.getElementById('valorUnidad');
+        const monMax = document.getElementById('montoMax');
+        const monSol = document.getElementById('montoSolicitado');
+        const outEnt = document.getElementById('entrega');
+        const outCuo = document.getElementById('cuota');
+        const kpiCuo = document.getElementById('kpiCuota');
 
-    const RE_DATA = {
-      "Convencional": {
-        "Particulares": [
-          {
-            "nombre": "Línea KWID 12 MARS",
-            "modelos": ["Kwid"],
-            "tope": 12000000,
-            "planes": [
-              { "plazo": 12, "tna": 0.0, "cuota1000": 83.33, "cncCamp": 9 },
-              { "plazo": 18, "tna": 0.0, "cuota1000": 55.56, "cncCamp": 9 }
-            ]
-          },
-          {
-            "nombre": "Línea KWID 11 MARS",
-            "modelos": ["Kwid"],
-            "tope": 11000000,
-            "planes": [
-              { "plazo": 24, "tna": 9.9, "cuota1000": 47.83, "cncCamp": 12 },
-            ]
-          },
-          {
-            "nombre": "Línea KWID 10 MARS",
-            "modelos": ["Kwid"],
-            "tope": 10000000,
-            "planes": [
-              { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
-              { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
-              { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea LOGAN 13 MARS",
-            "modelos": ["Logan"],
-            "tope": 13000000,
-            "planes": [
-              { "plazo": 12, "tna": 0.0, "cuota1000": 83.33, "cncCamp": 9 },
-              { "plazo": 18, "tna": 0.0, "cuota1000": 55.56, "cncCamp": 9 },
-              { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 },
-              { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
-              { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
-              { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea SANDERO 13 MARS",
-            "modelos": ["Sandero"],
-            "tope": 13000000,
-            "planes": [
-              { "plazo": 12, "tna": 4.9, "cuota1000": 86.42, "cncCamp": 12 },
-              { "plazo": 18, "tna": 9.9, "cuota1000": 61.74, "cncCamp": 12 },
-              { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 },
-              { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
-              { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
-              { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea STEPWAY 13 MARS",
-            "modelos": ["Stepway"],
-            "tope": 13000000,
-            "planes": [
-              { "plazo": 12, "tna": 4.9, "cuota1000": 86.42, "cncCamp": 12 },
-              { "plazo": 18, "tna": 9.9, "cuota1000": 61.74, "cncCamp": 12 },
-              { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 },
-              { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
-              { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
-              { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea KANGOO 13 MARS",
-            "modelos": ["Kangoo"],
-            "tope": 13000000,
-            "planes": [
-              { "plazo": 12, "tna": 4.9, "cuota1000": 86.42, "cncCamp": 12 },
-              { "plazo": 18, "tna": 9.9, "cuota1000": 61.74, "cncCamp": 12 },
-              { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 },
-              { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
-              { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
-              { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea DUSTER 15 MARS",
-            "modelos": ["Duster"],
-            "tope": 15000000,
-            "planes": [
-              { "plazo": 12, "tna": 14.9, "cuota1000": 92.82, "cncCamp": 12 },
-              { "plazo": 18, "tna": 19.9, "cuota1000": 68.20, "cncCamp": 12 },
-              { "plazo": 24, "tna": 24.9, "cuota1000": 57.68, "cncCamp": 12 },
-            ]
-          },
-          {
-            "nombre": "Línea DUSTER 20 MARS",
-            "modelos": ["Duster"],
-            "tope": 20000000,
-            "planes": [
-              { "plazo": 36, "tna": 34.9, "cuota1000": 51.29, "cncCamp": 12 },
-              { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
-              { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea KARDIAN 13 MARS",
-            "modelos": ["Kardian"],
-            "tope": 14000000,
-            "planes": [
-              { "plazo": 12, "tna": 0.0, "cuota1000": 83.33, "cncCamp": 9 },
-              { "plazo": 18, "tna": 9.9, "cuota1000": 61.74, "cncCamp": 12 },
-              { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea KARDIAN 16 MARS",
-            "modelos": ["Kardian"],
-            "tope": 16000000,
-            "planes": [
-              { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
-              { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
-              { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea ARKANA",
-            "modelos": ["Arkana"],
-            "tope": 17000000,
-            "planes": [
-              { "plazo": 9, "tna": 0.0, "cuota1000": 111.11, "cncCamp": 9 },
-              { "plazo": 12, "tna": 9.9, "cuota1000": 89.60, "cncCamp": 12 },
-              { "plazo": 18, "tna": 14.9, "cuota1000": 64.95, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea KOLEOS",
-            "modelos": ["Koleos"],
-            "tope": 20000000,
-            "planes": [
-              { "plazo": 12, "tna": 19.9, "cuota1000": 96.07, "cncCamp": 12 },
-              { "plazo": 18, "tna": 24.9, "cuota1000": 71.50, "cncCamp": 12 }
-            ]
-          }
-        ],
-        "Utilitarios": [
-          {
-            "nombre": "Línea ALASKAN 22 MARS",
-            "modelos": ["Alaskan"],
-            "tope": 22000000,
-            "planes": [
-              { "plazo": 12, "tna": 4.9, "cuota1000": 86.42, "cncCamp": 12 },
-              { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
-              { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
-              { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea ALASKAN 18 MARS",
-            "modelos": ["Alaskan"],
-            "tope": 18000000,
-            "planes": [
-              { "plazo": 18, "tna": 9.9, "cuota1000": 61.74, "cncCamp": 12 },
-              { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea 13 MARS OROCH",
-            "modelos": ["Oroch"],
-            "tope": 13000000,
-            "planes": [
-              { "plazo": 12, "tna": 0.0, "cuota1000": 83.33, "cncCamp": 9 },
-              { "plazo": 18, "tna": 9.9, "cuota1000": 61.74, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea 16 MARS OROCH",
-            "modelos": ["Oroch"],
-            "tope": 16000000,
-            "planes": [
-              { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 },
-              { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 },
-              { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
-              { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea 12 MARS KVU",
-            "modelos": ["Kangoo Express"],
-            "tope": 13000000,
-            "planes": [
-              { "plazo": 12, "tna": 0.0, "cuota1000": 83.33, "cncCamp": 9 },
-              { "plazo": 18, "tna": 0.0, "cuota1000": 55.56, "cncCamp": 9 }
-            ]
-          },
-          {
-            "nombre": "Línea 14 MARS KVU",
-            "modelos": ["Kangoo Express"],
-            "tope": 14000000,
-            "planes": [
-              { "plazo": 24, "tna": 14.9, "cuota1000": 51.05, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea 16 MARS KVU",
-            "modelos": ["Kangoo Express"],
-            "tope": 16000000,
-            "planes": [
-              { "plazo": 36, "tna": 29.9, "cuota1000": 47.63, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea 19 MARS KVU",
-            "modelos": ["Kangoo Express"],
-            "tope": 19000000,
-            "planes": [
-              { "plazo": 48, "tna": 34.9, "cuota1000": 45.02, "cncCamp": 12 },
-              { "plazo": 60, "tna": 34.9, "cuota1000": 41.53, "cncCamp": 12 }
-            ]
-          },
-          {
-            "nombre": "Línea 13 MARS MASTER",
-            "modelos": ["Master"],
-            "tope": 13000000,
-            "planes": [
-              { "plazo": 12, "tna": 19.9, "cuota1000": 96.07, "cncCamp": 12 },
-              { "plazo": 18, "tna": 29.9, "cuota1000": 74.85, "cncCamp": 12 },
- 
-            ]
-          },
-          {
-            "nombre": "Línea 23 MARS MASTER",
-            "modelos": ["Master"],
-            "tope": 23000000,
-            "planes": [
-              { "plazo": 24, "tna": 39.9, "cuota1000": 68.12, "cncCamp": 12 },
-              { "plazo": 36, "tna": 49.9, "cuota1000": 62.78, "cncCamp": 12 },
-              { "plazo": 48, "tna": 49.9, "cuota1000": 57.17, "cncCamp": 12 },
-              { "plazo": 60, "tna": 49.9, "cuota1000": 54.27, "cncCamp": 12 }
-            ]
-          }
-        ]
-      }
-    };
+        // Estado global para las opciones de tasa dual
+        let dualRatePlans = {};
 
 
-    // Helpers de formato
-    const nf = new Intl.NumberFormat('es-AR', { maximumFractionDigits: 0 });
-    const fmt = n => (n === null || n === undefined || isNaN(n)) ? '—' : n.toLocaleString('es-AR', { style: 'currency', currency: 'ARS', maximumFractionDigits: 0 });
-    const fmtInt = n => nf.format(n || 0);
-    const unfmt = s => !s ? 0 : Number(String(s).replace(/[^0-9]/g, '')) || 0;
-    const mask = el => { el.value = el.value ? fmtInt(unfmt(el.value)) : ''; };
+        // --- Funciones Auxiliares ---
 
-    // Tema (🌙/🌞)
-    const themeBtn = document.getElementById('themeToggle');
-    function updateThemeIcon() { themeBtn.textContent = document.body.classList.contains('dark') ? '🌞' : '🌙'; }
-    themeBtn.addEventListener('click', () => { document.body.classList.toggle('dark'); updateThemeIcon(); localStorage.setItem('calc_theme', document.body.classList.contains('dark') ? 'dark' : 'light'); });
-    const savedTheme = localStorage.getItem('calc_theme'); if (savedTheme === 'dark') document.body.classList.add('dark'); updateThemeIcon();
+        function fmt(n) {
+            if (!n) return '—';
+            return `$${Math.round(n).toLocaleString('es-AR', { minimumFractionDigits: 0 })}`;
+        }
 
-    // DOM
-    const selMarca = document.getElementById('marca');
-    const selModelo = document.getElementById('modelo');
-    const selPlazo = document.getElementById('plazo');
-    const inValor = document.getElementById('valorUnidad');
-    const inMax = document.getElementById('montoMax');
-    const inCred = document.getElementById('montoSolicitado');
-    const outEnt = document.getElementById('entrega');
-    const outCuo = document.getElementById('cuota');
-    const kpiCuo = document.getElementById('kpiCuota');
+        function parseNumeric(value) {
+            if (!value || value === '—') return 0;
+            // Elimina el signo de pesos y los separadores de miles
+            const cleaned = value.toString().replace('$', '').replace(/\./g, '').replace(/,/g, '.');
+            return parseFloat(cleaned);
+        }
 
-    // Renault helpers
-    function re_allLineas() { const out = []; Object.values(RE_DATA).forEach(prod => Object.values(prod).forEach(arr => arr.forEach(l => out.push(l)))); return out; }
-    function re_modelosUnicos() { const s = new Set(); re_allLineas().forEach(l => l.modelos.forEach(m => s.add(m))); return Array.from(s).sort(); }
-    function re_planesPorModelo(modelo) { return re_allLineas().filter(l => l.modelos.includes(modelo)); }
-    function re_plazosDisponibles(modelo) { const s = new Set(); re_planesPorModelo(modelo).forEach(l => l.planes.forEach(p => s.add(p.plazo))); return Array.from(s).sort((a, b) => a - b); }
-    function re_lineaPara(modelo, plazo) { const c = re_planesPorModelo(modelo).filter(l => l.planes.some(p => p.plazo === plazo)); if (!c.length) return null; return c.reduce((a, b) => (a.tope || 0) >= (b.tope || 0) ? a : b); }
-    function re_planPara(modelo, plazo) { const l = re_lineaPara(modelo, plazo); return l ? l.planes.find(p => p.plazo === plazo) : null; }
+        function formatInput(inputElement) {
+            let value = inputElement.value.replace(/[^\d]/g, '');
+            let number = parseInt(value, 10);
 
-    // Las funciones auxiliares de Chevrolet (ch_*) han sido eliminadas.
+            if (isNaN(number)) {
+                inputElement.value = '';
+                return;
+            }
 
-    // Cargar marcas - MODIFICADA para cargar solo 'Renault'
-    function loadMarcas() {
-      selMarca.innerHTML = ['Renault'].map(m => `<option value="${m}">${m}</option>`).join('');
-      // Se ajusta la lógica de guardado local, asumiendo que solo se usará 'Renault'
-      const savedMarca = localStorage.getItem('calc_marca');
-      if (savedMarca === 'Renault') selMarca.value = savedMarca;
-    }
+            inputElement.value = number.toLocaleString('es-AR').replace(/,/g, '.');
+        }
 
-    // Cargar modelos - MODIFICADA para usar solo modelos Renault
-    function loadModelos() {
-      let mods = re_modelosUnicos();
-      selModelo.innerHTML = mods.map(m => `<option value="${m}">${m}</option>`).join('');
-      // Ya no hay pre-llenado de valor de auto automático
-      inValor.value = '';
-    }
+        function getValues() {
+            return {
+                marca: selMarca.value,
+                modelo: selModelo.value,
+                plazo: parseInt(selPlazo.value),
+                rateOption: selRate.value,
+                precio: parseNumeric(valUni.value),
+                creditoReq: parseNumeric(monSol.value),
+                limite: parseNumeric(monMax.value)
+            };
+        }
 
-    // Cargar plazos - MODIFICADA para usar solo plazos Renault
-    function loadPlazos() {
-      const modelo = selModelo.value;
-      let plazos = re_plazosDisponibles(modelo);
-      selPlazo.innerHTML = plazos.map(p => `<option value="${p}">${p} meses</option>`).join('');
-    }
+        // --- Lógica de la Calculadora Renault ---
 
-    // Actualizar límite - MODIFICADA para usar solo límite Renault
-    function updateLimite() {
-      const modelo = selModelo.value, plazo = +selPlazo.value;
-      const linea = re_lineaPara(modelo, plazo); 
-      const limite = linea?.tope ?? null; 
-      inMax.value = fmt(limite);
-      return limite || 0;
-    }
+        function re_modelosDisponibles() {
+            const modelos = new Set();
+            Object.keys(RE_DATA.Convencional).forEach(cat => {
+                RE_DATA.Convencional[cat].forEach(l => l.modelos.forEach(m => modelos.add(m)));
+            });
+            return Array.from(modelos).sort();
+        }
 
-    // Recalcular - MODIFICADA para usar solo la lógica de Renault
-    function recalc() {
-      const modelo = selModelo.value, plazo = +selPlazo.value;
-      const precio = unfmt(inValor.value);
-      const creditoReq = unfmt(inCred.value);
-      const limite = updateLimite();
-      // Validación límite
-      const over = limite > 0 && creditoReq > limite;
-      if (over) { outEnt.textContent = '—'; outCuo.textContent = '—'; kpiCuo.classList.add('alert'); return; } else kpiCuo.classList.remove('alert');
+        function re_planesPorModelo(modelo) {
+            const lines = [];
+            Object.keys(RE_DATA.Convencional).forEach(cat => {
+                lines.push(...RE_DATA.Convencional[cat].filter(l => l.modelos.includes(modelo)));
+            });
+            return lines;
+        }
 
-      const plan = re_planPara(modelo, plazo);
-      const linea = re_lineaPara(modelo, plazo);
-      if (!plan || !linea) { outEnt.textContent = '—'; outCuo.textContent = '—'; return; }
-      const creditoBruto = Math.min(creditoReq, linea.tope || 0);
-      const cnc = creditoBruto * ((plan.cncCamp || 0) / 100) * 1.21; // CNC efectivo + IVA
-      const neto = creditoBruto; // no se descuenta CNC del acreditado
-      const entrega = (precio - neto) + cnc;
-      const cuota = plan.cuota1000 * (creditoBruto / 1000);
-      outEnt.textContent = fmt(entrega);
-      outCuo.textContent = fmt(cuota);
-    }
+        function re_plazosDisponibles(modelo) {
+            const s = new Set();
+            re_planesPorModelo(modelo).forEach(l => l.planes.forEach(p => s.add(p.plazo)));
+            return Array.from(s).sort((a, b) => a - b);
+        }
 
-    // Eventos - MODIFICADOS para eliminar chequeos de 'Chevrolet'
-    selMarca.addEventListener('change', () => { localStorage.setItem('calc_marca', selMarca.value); loadModelos(); loadPlazos(); updateLimite(); recalc(); });
-    selModelo.addEventListener('change', () => { loadPlazos(); updateLimite(); recalc(); });
-    selPlazo.addEventListener('change', () => { updateLimite(); recalc(); });
-    inValor.addEventListener('input', () => { mask(inValor); recalc(); });
-    inCred.addEventListener('input', () => { mask(inCred); recalc(); });
+        function re_planPara(modelo, plazo, nombre_linea = null) {
+            const allLines = re_planesPorModelo(modelo);
+            let targetLine = null;
 
-    // Init
-    loadMarcas(); loadModelos(); loadPlazos(); updateLimite(); recalc();
-  </script>
+            if (nombre_linea) {
+                targetLine = allLines.find(l => l.nombre === nombre_linea);
+            } else {
+                const linesForPlazo = allLines.filter(l => l.planes.some(p => p.plazo === plazo));
+                if (!linesForPlazo.length) return null;
+                targetLine = linesForPlazo.reduce((a, b) => (a.tope || 0) >= (b.tope || 0) ? a : b);
+            }
+
+            if (targetLine) {
+                const plan = targetLine.planes.find(p => p.plazo === plazo);
+                if (plan) {
+                    return { ...plan, tope: targetLine.tope, nombre_linea: targetLine.nombre };
+                }
+            }
+
+            return null;
+        }
+
+        // --- Funciones de Carga de Opciones ---
+
+        function loadMarcas() {
+            selMarca.innerHTML = ['Renault'].map(m => `<option value="${m}">${m}</option>`).join('');
+            localStorage.setItem('calc_marca', 'Renault');
+        }
+
+        function loadModelos() {
+            const modelos = re_modelosDisponibles();
+            selModelo.innerHTML = modelos.map(m => `<option value="${m}">${m}</option>`).join('');
+            if (modelos.length) selModelo.value = modelos[0];
+        }
+
+        function loadPlazos() {
+            const { modelo } = getValues();
+
+            // Limpiar opciones de tasa y ocultar contenedor al cambiar de modelo o plazo
+            rateContainer.style.display = 'none';
+            selRate.innerHTML = '';
+            dualRatePlans = {}; // Nombre de variable global renombrado
+            selPlazo.innerHTML = '';
+
+
+            if (!modelo) {
+                return;
+            }
+
+            const plazos = re_plazosDisponibles(modelo);
+            selPlazo.innerHTML = plazos.map(p => `<option value="${p}">${p} meses</option>`).join('');
+
+            if (plazos.length) {
+                loadRateOptions();
+            }
+        }
+
+        /**
+         * CORREGIDA: Incluye la lógica de tasa dual para Arkana en 18 y 24 meses.
+         */
+        function loadRateOptions() {
+            const { modelo, plazo } = getValues();
+            rateContainer.style.display = 'none';
+            selRate.innerHTML = '';
+            dualRatePlans = {};
+
+            // Aplicar lógica dual si es Arkana en 18 o 24 meses
+            if (modelo === 'Arkana' && (plazo === 18 || plazo === 24)) {
+                const allLines = re_planesPorModelo(modelo);
+
+                // Encontrar planes para el plazo específico
+                const tasa0Line = allLines.find(l => l.planes.some(p => p.plazo === plazo && p.tna < 1 && l.nombre.includes('TASA 0')));
+                const interesLine = allLines.find(l => l.planes.some(p => p.plazo === plazo && p.tna >= 1));
+
+                if (tasa0Line && interesLine) {
+                    const tasa0Plan = tasa0Line.planes.find(p => p.plazo === plazo);
+                    const interesPlan = interesLine.planes.find(p => p.plazo === plazo);
+
+                    dualRatePlans.tasa0 = { ...tasa0Plan, tope: tasa0Line.tope, nombre_linea: tasa0Line.nombre };
+                    dualRatePlans.interes = { ...interesPlan, tope: interesLine.tope, nombre_linea: interesLine.nombre };
+
+                    rateContainer.style.display = 'block';
+
+                    const t0Text = `Tasa 0% (Máx: ${fmt(tasa0Line.tope).replace('$', '')})`;
+                    selRate.innerHTML += `<option value="tasa0">${t0Text}</option>`;
+
+                    const intText = `TNA ${interesPlan.tna.toFixed(1)}% (Máx: ${fmt(interesLine.tope).replace('$', '')})`;
+                    selRate.innerHTML += `<option value="interes">${intText}</option>`;
+
+                    checkInterestOption();
+                }
+            }
+        }
+
+        function checkInterestOption() {
+            const { modelo, plazo, creditoReq } = getValues();
+            const kpiCuo = document.getElementById('kpiCuota');
+
+            // Solo aplica la restricción si estamos en un caso de tasa dual (Arkana 18 o 24 meses)
+            if (!(modelo === 'Arkana' && (plazo === 18 || plazo === 24)) || !dualRatePlans.tasa0 || !dualRatePlans.interes) {
+                return;
+            }
+
+            const tasa0Plan = dualRatePlans.tasa0;
+            const interestOption = selRate.querySelector('option[value="interes"]');
+
+            if (creditoReq > tasa0Plan.tope) {
+                // Monto excede el límite de Tasa 0%: Forzar selección a Interés.
+                if (interestOption) {
+                    interestOption.disabled = false;
+                    selRate.value = 'interes';
+                }
+                kpiCuo.classList.remove('alert');
+            } else {
+                // Monto está dentro del límite de Tasa 0%: Forzar selección a Tasa 0%.
+                if (interestOption) {
+                    interestOption.disabled = true;
+                    selRate.value = 'tasa0';
+                }
+            }
+        }
+
+        /**
+         * CORREGIDA: Ahora determina el tope máximo correctamente en casos de tasa dual.
+         */
+        function updateLimite() {
+            const { modelo, plazo } = getValues();
+            if (!modelo || !plazo) {
+                monMax.value = '—';
+                return;
+            }
+
+            let tope = 0;
+
+            // Si es un caso de tasa dual (Arkana 18 o 24), el tope visible es el máximo de ambas líneas (la de Interés).
+            if (modelo === 'Arkana' && (plazo === 18 || plazo === 24) && dualRatePlans.interes) {
+                tope = dualRatePlans.interes.tope;
+            } else {
+                const allLines = re_planesPorModelo(modelo);
+                const linesForPlazo = allLines.filter(l => l.planes.some(p => p.plazo === plazo));
+                if (linesForPlazo.length) {
+                    const linea = linesForPlazo.reduce((a, b) => (a.tope || 0) >= (b.tope || 0) ? a : b);
+                    tope = linea.tope;
+                }
+            }
+
+            monMax.value = fmt(tope);
+        }
+
+        // --- Función Principal de Recálculo ---
+
+        function recalc() {
+            const { marca, modelo, plazo, precio, creditoReq, limite, rateOption } = getValues();
+            const kpiCuo = document.getElementById('kpiCuota');
+
+            if (marca !== 'Renault' || !modelo || !plazo || isNaN(precio) || isNaN(creditoReq)) {
+                outEnt.textContent = '—';
+                outCuo.textContent = '—';
+                kpiCuo.classList.remove('alert');
+                return;
+            }
+
+            // 1. Verificar si el monto solicitado supera el monto máximo total (Lógica general)
+            const over = limite > 0 && creditoReq > limite;
+            if (over) {
+                outEnt.textContent = '—';
+                outCuo.textContent = '—';
+                kpiCuo.classList.add('alert');
+                return;
+            } else {
+                kpiCuo.classList.remove('alert');
+            }
+
+            let plan = null;
+
+            // Lógica de tasa dual para Arkana 18 y 24 meses
+            if (modelo === 'Arkana' && (plazo === 18 || plazo === 24) && dualRatePlans.tasa0 && dualRatePlans.interes) {
+                checkInterestOption();
+
+                plan = dualRatePlans[selRate.value];
+
+                // Alerta si el Monto solicitado excede el TOPE específico del plan Tasa 0%
+                if (plan && plan.nombre_linea.includes('TASA 0') && creditoReq > plan.tope) {
+                    outEnt.textContent = '—';
+                    outCuo.textContent = '—';
+                    kpiCuo.classList.add('alert');
+                    return;
+                }
+
+            } else {
+                // Lógica estándar para otros modelos o plazos
+                plan = re_planPara(modelo, plazo);
+            }
+
+            if (!plan) {
+                outEnt.textContent = '—';
+                outCuo.textContent = '—';
+                return;
+            }
+
+            // 2. Cálculo de Entrega y Cuota
+            const creditoBruto = Math.min(creditoReq, plan.tope || 0);
+            const cnc = creditoBruto * ((plan.cncCamp || 0) / 100) * 1.21; // CNC efectivo + IVA
+            const neto = creditoBruto;
+            const entrega = (precio - neto) + cnc;
+            const cuota = plan.cuota1000 * (creditoBruto / 1000);
+
+            outEnt.textContent = fmt(entrega);
+            outCuo.textContent = fmt(cuota);
+        }
+
+        // --- Inicialización y Eventos ---
+
+        function init() {
+            loadMarcas();
+            loadModelos();
+            loadPlazos();
+            updateLimite();
+            recalc();
+        }
+
+        // Eventos 
+        selMarca.addEventListener('change', () => { localStorage.setItem('calc_marca', selMarca.value); loadModelos(); loadPlazos(); updateLimite(); recalc(); });
+        selModelo.addEventListener('change', () => { loadPlazos(); updateLimite(); recalc(); });
+        selPlazo.addEventListener('change', () => { loadRateOptions(); updateLimite(); recalc(); });
+
+        // Eventos de entrada con formato de miles
+        valUni.addEventListener('input', () => {
+            formatInput(valUni);
+            updateLimite();
+            recalc();
+        });
+        monSol.addEventListener('input', () => {
+            formatInput(monSol);
+            updateLimite();
+            recalc();
+            checkInterestOption();
+        });
+
+        selRate.addEventListener('change', recalc);
+
+        // Evento para el tema (Dark/Light Mode)
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            document.body.classList.toggle('dark');
+            localStorage.setItem('theme', document.body.classList.contains('dark') ? 'dark' : 'light');
+        });
+
+        // Cargar tema guardado
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark');
+        }
+
+        // Inicializar la calculadora
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
 </body>
 
 </html>
