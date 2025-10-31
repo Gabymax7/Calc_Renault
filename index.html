@@ -263,8 +263,6 @@
 
     <script>
         // Datos embebidos
-        // El array CH_DATA de Chevrolet ha sido eliminado.
-
         const RE_DATA = {
             "Convencional": {
                 "Particulares": [
@@ -399,41 +397,32 @@
                         "modelos": ["Arkana"],
                         "tope": 18000000,
                         "planes": [
-                            // Plazo 9 meses, TNA 0.00%, Cuota $111.11, CNC 9%
                             { "plazo": 9, "tna": 0.0, "cuota1000": 111.11, "cncCamp": 9 },
-                            // Plazo 12 meses, TNA 0.00%, Cuota $83.33, CNC 9%
                             { "plazo": 12, "tna": 0.0, "cuota1000": 83.33, "cncCamp": 9 }
                         ]
                     },
-                    // Línea 2: Tasa 0% con tope de $20M (18 meses)
                     {
                         "nombre": "Línea ARKANA TASA 0 (18M)",
                         "modelos": ["Arkana"],
                         "tope": 20000000,
                         "planes": [
-                            // Plazo 18 meses, TNA 0.00%, Cuota $55.56, CNC 9%
                             { "plazo": 18, "tna": 0.0, "cuota1000": 55.56, "cncCamp": 9 }
                         ]
                     },
-                    // Línea 3: Tasa 0% con tope de $17M (24 meses)
                     {
                         "nombre": "Línea ARKANA TASA 0 (24M)",
                         "modelos": ["Arkana"],
                         "tope": 17000000,
                         "planes": [
-                            // Plazo 24 meses, TNA 0.00%, Cuota $41.67, CNC 9%
                             { "plazo": 24, "tna": 0.0, "cuota1000": 41.67, "cncCamp": 9 }
                         ]
                     },
-                    // Línea 4: Tasa Subsidiada con tope de $25M (18 y 24 meses)
                     {
                         "nombre": "Línea ARKANA SUBSIDIADA (18/24M)",
                         "modelos": ["Arkana"],
                         "tope": 25000000,
                         "planes": [
-                            // Plazo 18 meses, TNA 17.90%, Cuota $66.89, CNC 12%
                             { "plazo": 18, "tna": 17.9, "cuota1000": 66.89, "cncCamp": 12 },
-                            // Plazo 24 meses, TNA 27.90%, Cuota $59.72, CNC 12%
                             { "plazo": 24, "tna": 27.9, "cuota1000": 59.72, "cncCamp": 12 }
                         ]
                     },
@@ -666,7 +655,7 @@
             // Limpiar opciones de tasa y ocultar contenedor al cambiar de modelo o plazo
             rateContainer.style.display = 'none';
             selRate.innerHTML = '';
-            dualRatePlans = {}; // Nombre de variable global renombrado
+            dualRatePlans = {}; 
             selPlazo.innerHTML = '';
 
 
@@ -683,7 +672,7 @@
         }
 
         /**
-         * CORREGIDA: Incluye la lógica de tasa dual para Arkana en 18 y 24 meses.
+         * Incluye la lógica de tasa dual para Arkana en 18 y 24 meses.
          */
         function loadRateOptions() {
             const { modelo, plazo } = getValues();
@@ -748,10 +737,11 @@
         }
 
         /**
-         * CORREGIDA: Ahora determina el tope máximo correctamente en casos de tasa dual.
+         * Esta función actualiza el campo de Monto Máximo (monMax) con el tope del plan seleccionado.
+         * En casos de tasa dual (Arkana 18/24), muestra el tope específico de la OPCIÓN de tasa elegida.
          */
         function updateLimite() {
-            const { modelo, plazo } = getValues();
+            const { modelo, plazo, rateOption } = getValues();
             if (!modelo || !plazo) {
                 monMax.value = '—';
                 return;
@@ -759,13 +749,25 @@
 
             let tope = 0;
 
-            // Si es un caso de tasa dual (Arkana 18 o 24), el tope visible es el máximo de ambas líneas (la de Interés).
-            if (modelo === 'Arkana' && (plazo === 18 || plazo === 24) && dualRatePlans.interes) {
-                tope = dualRatePlans.interes.tope;
+            // Lógica para Tasa Dual de Arkana (18 o 24 meses)
+            if (modelo === 'Arkana' && (plazo === 18 || plazo === 24) && dualRatePlans.tasa0 && dualRatePlans.interes) {
+
+                // El tope mostrado ahora depende de la 'rateOption' seleccionada
+                if (rateOption === 'tasa0') {
+                    tope = dualRatePlans.tasa0.tope;
+                } else if (rateOption === 'interes') {
+                    tope = dualRatePlans.interes.tope;
+                } else {
+                    // Si aún no se seleccionó nada o hay un error, usa el tope más alto (interes)
+                    tope = dualRatePlans.interes.tope;
+                }
+
             } else {
+                // Lógica estándar para otros modelos o plazos (solo hay una línea por defecto)
                 const allLines = re_planesPorModelo(modelo);
                 const linesForPlazo = allLines.filter(l => l.planes.some(p => p.plazo === plazo));
                 if (linesForPlazo.length) {
+                    // Mantiene el tope más alto para modelos no-dual
                     const linea = linesForPlazo.reduce((a, b) => (a.tope || 0) >= (b.tope || 0) ? a : b);
                     tope = linea.tope;
                 }
@@ -802,9 +804,8 @@
 
             // Lógica de tasa dual para Arkana 18 y 24 meses
             if (modelo === 'Arkana' && (plazo === 18 || plazo === 24) && dualRatePlans.tasa0 && dualRatePlans.interes) {
-                checkInterestOption();
-
-                plan = dualRatePlans[selRate.value];
+                
+                plan = dualRatePlans[rateOption];
 
                 // Alerta si el Monto solicitado excede el TOPE específico del plan Tasa 0%
                 if (plan && plan.nombre_linea.includes('TASA 0') && creditoReq > plan.tope) {
@@ -857,14 +858,19 @@
             updateLimite();
             recalc();
         });
+        
+        // **********************************************
+        // 📢 EVENTO monSol.addEventListener CORREGIDO
+        // **********************************************
         monSol.addEventListener('input', () => {
             formatInput(monSol);
-            updateLimite();
-            recalc();
-            checkInterestOption();
+            checkInterestOption(); // 1. Fuerza la tasa si el monto excede el tope de Tasa 0%
+            updateLimite();        // 2. Actualiza el Monto Máximo con el nuevo tope de la tasa forzada
+            recalc();              // 3. Recalcula con la tasa y límite correctos
         });
 
-        selRate.addEventListener('change', recalc);
+        // Este evento ya estaba bien para actualizar el límite y recálculo
+        selRate.addEventListener('change', () => { updateLimite(); recalc(); });
 
         // Evento para el tema (Dark/Light Mode)
         document.getElementById('themeToggle').addEventListener('click', () => {
